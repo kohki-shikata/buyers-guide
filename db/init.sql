@@ -35,20 +35,22 @@ CREATE TABLE Products (
   description TEXT,
   jancode TEXT,
   url TEXT,
+  category_id INTEGER,
   image_file TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-DROP TABLE IF EXISTS Product_Categories;
-CREATE TABLE Product_Categories (
-  id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-  product_id INTEGER,
-  category_id INTEGER,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (product_id) REFERENCES Products(id),
   FOREIGN KEY (category_id) REFERENCES Categories(id)
 );
+-- DROP TABLE IF EXISTS Product_Categories;
+-- CREATE TABLE Product_Categories (
+--   id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+--   product_id INTEGER,
+--   category_id INTEGER,
+--   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+--   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+--   FOREIGN KEY (product_id) REFERENCES Products(id),
+--   FOREIGN KEY (category_id) REFERENCES Categories(id)
+-- );
 DROP TABLE IF EXISTS Shops;
 CREATE TABLE Shops (
   id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -98,12 +100,27 @@ INSERT INTO Categories(name) VALUES ('調味料');
 INSERT INTO Categories(name) VALUES ('ご飯・穀類');
 INSERT INTO Categories(name) VALUES ('麺類');
 INSERT INTO Categories(name) VALUES ('飲料水');
-INSERT INTO Products(name) VALUES ('白菜');
-INSERT INTO Products(name) VALUES ('バナナ');
-INSERT INTO Products(name) VALUES ('鶏胸肉');
-INSERT INTO Products(name) VALUES ('鮭切り身');
+INSERT INTO Products(name, category_id) VALUES ('白菜', 1);
+INSERT INTO Products(name, category_id) VALUES ('バナナ', 2);
+INSERT INTO Products(name, category_id) VALUES ('鶏胸肉', 3);
+INSERT INTO Products(name, category_id) VALUES ('鮭切り身', 4);
 
-INSERT INTO Product_Categories(product_id, category_id) VALUES (1,1);
-INSERT INTO Product_Categories(product_id, category_id) VALUES (2,2);
-INSERT INTO Product_Categories(product_id, category_id) VALUES (3,3);
-INSERT INTO Product_Categories(product_id, category_id) VALUES (4,4);
+-- INSERT INTO Product_Categories(product_id, category_id) VALUES (1,1);
+-- INSERT INTO Product_Categories(product_id, category_id) VALUES (2,2);
+-- INSERT INTO Product_Categories(product_id, category_id) VALUES (3,3);
+-- INSERT INTO Product_Categories(product_id, category_id) VALUES (4,4);
+
+INSERT INTO Shops(name) VALUES ('マルヤスJR千里丘店');
+INSERT INTO Shops(name) VALUES ('マルヤス吹田新芦屋店');
+INSERT INTO Shops(name) VALUES ('業務スーパー千里丘店');
+INSERT INTO Shops(name) VALUES ('業務スーパーTAKENOKO茨木市役所前店');
+INSERT INTO Shops(name) VALUES ('サンディ茨木駅前店');
+INSERT INTO Shops(name) VALUES ('酒のやまやJR茨木駅前店');
+INSERT INTO Shops(name) VALUES ('酒のやまやJR吹田千里丘店');
+INSERT INTO Shops(name) VALUES ('satake茨木西駅前店');
+INSERT INTO Shops(name) VALUES ('satakeビエラ千里丘店');
+INSERT INTO Shops(name) VALUES ('フレッシュバザールグランドセンター千里丘店');
+
+INSERT INTO Orders(status) VALUES ('not_yet');
+INSERT INTO Order_Products(order_id, product_id, shop_id, quantity, unit, budget_price, max_price, description) VALUES (1,1,1,0.25,'玉',98,120, '業務スーパーで買っても良い');
+INSERT INTO Order_Products(order_id, product_id, shop_id, quantity, unit, budget_price, max_price, description) VALUES (1,2,3,1,'パック',400,480, '1パック400g程度');
